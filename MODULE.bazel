@@ -12,23 +12,22 @@ module(
 )
 
 bazel_dep(name = "rules_python", version = "0.31.0")
+
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 
-bazel_dep(name = "pybind11_bazel", version = "2.11.1.bzl.3")
+bazel_dep(name = "pybind11_bazel", version = "2.12.0")
 
 python.toolchain(
-    python_version = "3.10",
     is_default = True,
+    python_version = "3.10",
 )
-
 use_repo(python, "python_versions")
 
 pip = use_extension("@rules_python//python/extensions:pip.bzl", "pip")
 pip.parse(
     hub_name = "my_pip",
     python_version = "3.10",
-    requirements_lock = "//python:requirements.txt",
+    requirements_lock = "//python:requirements_lock.txt",
+    requirements_windows = "//python:requirements_windows.txt",
 )
 use_repo(pip, "my_pip")
-
-

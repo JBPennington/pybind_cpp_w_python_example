@@ -1,0 +1,9 @@
+load("@my_pip//:requirements.bzl", "all_requirements")
+load("@rules_python//python:defs.bzl", "py_library")
+
+py_library(
+    name = "my_lib",
+    srcs = ["py_module.py"],
+    visibility = ["//visibility:public"],
+    deps = all_requirements,
+)

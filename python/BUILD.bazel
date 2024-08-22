@@ -1,0 +1,22 @@
+load("@my_pip//:requirements.bzl", "all_requirements")
+load("@python_versions//3.10:defs.bzl", "py_binary")
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+
+# This stanza calls a rule that generates targets for managing pip dependencies
+# with pip-compile.
+compile_pip_requirements(
+    name = "requirements",
+    src = "requirements.in",
+    requirements_txt = "requirements_lock.txt",
+    requirements_windows = "requirements_windows.txt",
+)
+
+exports_files(["my_lib"])
+
+py_binary(
+    name = "np_wrapper",
+    srcs = ["np_wrapper.py"],
+    imports = ["//python/my_lib"],
+    visibility = ["//visibility:public"],
+    deps = ["//python/my_lib"],
+)

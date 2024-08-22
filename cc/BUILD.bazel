@@ -1,13 +1,14 @@
-cc_binary(
+load("//embedded_py:embedded_py.bzl", "cc_py_binary")
+
+cc_py_binary(
     name = "my_cc_binary",
     srcs = ["main.cpp"],
+    py_deps = [
+        "//python/my_lib",
+    ],
     deps = [
+        "@pybind11",
         "@rules_python//python/cc:current_py_cc_headers",
         "@rules_python//python/cc:current_py_cc_libs",
-        "@pybind11",
     ],
-    data = [
-        "//python:np_wrapper_lib",
-        
-    ]
 )
