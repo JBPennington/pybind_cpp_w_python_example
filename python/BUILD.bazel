@@ -1,5 +1,5 @@
 load("@my_pip//:requirements.bzl", "all_requirements")
-load("@python_versions//3.10:defs.bzl", "py_binary")
+load("@python_versions//3.11:defs.bzl", "py_binary")
 load("@rules_python//python:pip.bzl", "compile_pip_requirements")
 
 # This stanza calls a rule that generates targets for managing pip dependencies
