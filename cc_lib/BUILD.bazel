@@ -1,0 +1,20 @@
+load("@my_pip//:requirements.bzl", "all_requirements")
+load("//embedded_py:embedded_py.bzl", "cc_py_library")
+
+cc_py_library(
+    name = "matplotlibcpp",
+    srcs = ["matplotlibcpp.h"],
+    hdrs = ["matplotlibcpp.h"],
+    includes = ["matplotlibcpp.h"],
+    py_deps = all_requirements,
+    deps = [
+        "@rules_python//python/cc:current_py_cc_headers",
+        "@rules_python//python/cc:current_py_cc_libs",
+    ],
+)
+
+cc_binary(
+    name = "test_plot",
+    srcs = ["test_matplotlib.cpp"],
+    deps = [":matplotlibcpp"],
+)

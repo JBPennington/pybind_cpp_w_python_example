@@ -75,3 +75,27 @@ def cc_py_binary(name, py_deps = [], **kwargs):
         name = name,
         **kwargs
     )
+
+def cc_py_library(name, py_deps = [], **kwargs):
+    py_runtime_target = name + "_py_runtime"
+    _cc_py_runtime(
+        name = py_runtime_target,
+        deps = py_deps,
+    )
+
+    kwargs.update({
+        "data": kwargs.get("data", []) + [":" + py_runtime_target],
+        "defines": [
+            "FOO=\\\"BAR\\\"",
+            "CPP_PYVENV_LAUNCHER=\\\"$(PYTHON3)\\\"",
+            "CPP_PYTHON_PATH=\\\"$(PYTHONPATH)\\\"",
+            "CPP_PYTHON_HOME=\\\"$(PYTHONHOME)\\\"",
+            "WITHOUT_NUMPY",
+        ],
+        "toolchains": kwargs.get("toolchains", []) + [":" + py_runtime_target],
+    })
+
+    native.cc_library(
+        name = name,
+        **kwargs
+    )
